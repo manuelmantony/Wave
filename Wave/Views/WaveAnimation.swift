@@ -9,12 +9,18 @@ import SwiftUI
 
 
 struct WaveAnimation: View {
+
+    // controlling height of the wave
+    @Binding var progress: Double
     
-    @State private var phase: Double = 0.0
-    @Binding public var progress: Double
+    @State var phase: Double = 0.0
     
+    var strength: Double = 40
+    var  frequency: Double = 7
+    var isPhaseReverse: Bool = false
+   
     var body: some View{
-        WaveShape(progress: $progress, strength: 40, frequency: 7, phase: phase)
+            WaveShape(progress: $progress, isPhaseReverse: isPhaseReverse, strength: strength, frequency: frequency, phase: phase)
             .onAppear{
                 withAnimation(Animation.linear(duration: 2).repeatForever(autoreverses: false)){
                     self.phase = .pi * 2
@@ -24,9 +30,10 @@ struct WaveAnimation: View {
 }
 
 struct WaveAnimation_Previews: PreviewProvider {
-    @State static var progres = 0.0
+    @State static var progress: Double = 0.0
+    @State static var phase: Double = 0.0
     static var previews: some View {
-        WaveAnimation(progress: $progres)
+        WaveAnimation(progress: $progress, phase: phase)
             .foregroundColor(.blue)
     }
 }

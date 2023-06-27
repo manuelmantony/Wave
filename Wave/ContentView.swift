@@ -13,22 +13,12 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            VStack(alignment: .center){
-           
-                WaveAnimation(progress: $progress)
+            WaveAnimation(progress: $progress)
+                .foregroundColor(.blue.opacity(0.5))
+            
+            WaveAnimation(progress: $progress, strength: 40, frequency: 7,  isPhaseReverse: true)
                 .foregroundColor(.blue)
-           
-                Button {
-                    progress +=  10.0
-                } label: {
-                    Image(systemName: "plus")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .foregroundColor(.red)
-                }
-            }
         }
-        .padding()
     }
 }
 

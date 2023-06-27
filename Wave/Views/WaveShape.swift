@@ -10,10 +10,11 @@ import SwiftUI
 struct WaveShape: Shape {
     
     @Binding var progress: Double
+    @State var isPhaseReverse:Bool = false
     
     // height
     var strength: Double
-    // frequency of sin wave
+    // frequency of sine wave
     var frequency: Double
     // offset
     var phase: Double = 0.0
@@ -26,6 +27,7 @@ struct WaveShape: Shape {
     
     
     func path(in rect: CGRect) -> Path {
+        
         let path = UIBezierPath()
         
         // getting screen width and height
@@ -48,7 +50,7 @@ struct WaveShape: Shape {
             let normalDistance = oneOverWidth * distanceFromMidWidth
             let parabola = -(normalDistance * normalDistance) + 1
             
-            let sine = sin(relativeX + phase)
+            let sine = sin(relativeX + ( isPhaseReverse ? -phase : phase))
             let y = parabola * strength * sine + midHeight - progress // button controller here
             
             path.addLine(to: CGPoint(x: x, y: y))
@@ -66,7 +68,7 @@ struct WaveShape: Shape {
 
 
 struct WaveShape_Preview: PreviewProvider {
-   @State static var progress = 0.0
+    @State static var progress = 0.0
     static var previews: some View{
         WaveShape(progress: $progress, strength: 30, frequency: 10)
     }
